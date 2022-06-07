@@ -65,7 +65,7 @@ public class Shoot : MonoBehaviour {
             hand.right = (Vector2)contr.aimDirection;
             if (transform.localScale.x < 0)
             {
-                hand.right = new Vector2(-hand.right.x, hand.right.y);
+                hand.right = new Vector2(-hand.right.x, -hand.right.y);
             }
         }
         if (contr.shoot && Time.time > nextFire && weapon.type == TypeOfWeaopn.Gun)
