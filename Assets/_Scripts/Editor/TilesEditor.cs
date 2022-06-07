@@ -119,7 +119,7 @@ public class TilesEditor : Editor
         Vector2 mouseP = Camera.current.ScreenToWorldPoint(newMousePosition);
         HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
         Vector2 gridPosition = new Vector2(Mathf.RoundToInt(mouseP.x), Mathf.RoundToInt(mouseP.y));
-        if ((Event.current.type == EventType.MouseDrag || Event.current.type == EventType.mouseDown) && Event.current.button == 0)
+        if ((Event.current.type == EventType.MouseDrag || Event.current.type == EventType.MouseDown) && Event.current.button == 0)
         {
             Rect tileMapBounds = new Rect(0, 0, ts.w, ts.h);
             if (tileMapBounds.Contains(gridPosition))
