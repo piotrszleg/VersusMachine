@@ -1,0 +1,112 @@
+fileFormatVersion: 2
+guid: b8120cf1131192f44babd556f5fc402b
+timeCreated: 1470740231
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Guns._0
+    21300002: Guns._1
+    21300004: Guns._2
+    21300006: Guns._3
+    21300008: Guns._4
+    21300010: Guns._5
+    21300012: Guns._7
+    21300014: Guns._8
+    21300016: Guns._9
+    21300018: Guns._10
+    21300020: Guns._11
+    21300022: Guns._12
+    21300024: Guns._13
+    21300026: Guns._14
+    21300028: Guns._15
+    21300030: Guns._16
+    21300032: Guns._17
+    21300034: Guns._18
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 400
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Guns._0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 719
+        width: 468
+        height: 305
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Guns._1
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 442
+        width: 917
+        height: 266
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Guns._2
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 44
+        width: 507
+        height: 473
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
