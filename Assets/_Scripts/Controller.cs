@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Controller : MonoBehaviour {
+public class Controller : MonoBehaviour {
 
     [HideInInspector]
     public Vector2 arrows=Vector2.zero;
