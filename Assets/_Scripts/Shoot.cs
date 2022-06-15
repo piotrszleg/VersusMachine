@@ -105,6 +105,7 @@ public class Shoot : MonoBehaviour {
         
         //Quaternion bulletRotation = Quaternion.AngleAxis(Vector2.Angle(transform.right, shootDirection), transform.forward);
         Transform newBullet = (Transform)Instantiate(weapon.bullet, bulletPosition, Quaternion.identity);
+        newBullet.GetComponent<Effector>().sender = gameObject;
         newBullet.transform.right = shootDirection;
         if (transform.localScale.x < 0)
         {

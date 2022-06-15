@@ -66,7 +66,7 @@ public class Tiles : MonoBehaviour {
         Texture2D newTexture = new Texture2D(w * tilesResolution, h * tilesResolution, TextureFormat.ARGB32, false);
         Vector2 newScale = new Vector2(w, h);
         transform.localScale = newScale;
-        transform.position = newScale / 2;
+        //transform.localPosition = newScale / 2;
         for (int x = 0; x < w; x++)
         {
             for (int y = 0; y < h; y++)

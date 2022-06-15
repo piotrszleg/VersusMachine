@@ -6,6 +6,7 @@ public class Killable : MonoBehaviour {
 
     public int hp = 100;
     private int currentHP;
+    private bool alive = true;
     public int CurrentHP {
         get
         {
@@ -25,27 +26,48 @@ public class Killable : MonoBehaviour {
     {
         if (transform.position.y < 0)
         {
-            Damage(100);
+            ShooterActor actor = gameObject.GetComponent<ShooterActor>();
+            if (actor != null)
+                actor.Falling();
+            Damage((100, null));
         }
     }
 
-    void Damage(int amount)
+    void Damage((int, GameObject) info)
     {
-        currentHP -= amount;
-        if (currentHP <= 0)
+        int amount = info.Item1;
+        GameObject enemy = info.Item2;
+        if(!ReferenceEquals(gameObject, enemy))
         {
-            if (hurt != null) AudioManager.Play(hurt);
-            if (corpsePrefab != null)
+            currentHP -= amount;
+            if (currentHP <= 0 && alive)
             {
-                Transform corpse = (Instantiate(corpsePrefab, transform.position, Quaternion.identity) as Transform);
-                if (transform.localScale.x < 0)
+                alive = false;
+                if (hurt != null) AudioManager.Play(hurt);
+                if (corpsePrefab != null)
                 {
-                    corpse.localScale = new Vector2(-corpse.localScale.x, corpse.localScale.y);
+                    Transform corpse = Instantiate(corpsePrefab, transform.position, Quaternion.identity) as Transform;
+                    if (transform.localScale.x < 0)
+                    {
+                        corpse.localScale = new Vector2(-corpse.localScale.x, corpse.localScale.y);
+                    }
                 }
+                onDeath.Invoke();
+                if (enemy != null)
+                {
+                    ShooterActor actor = enemy.GetComponent<ShooterActor>();
+                    if(actor != null) actor.Killing();
+                }
+                Destroy(gameObject);
             }
-            onDeath.Invoke();
-            Destroy(gameObject);
+            if (enemy != null)
+            {
+                ShooterActor actor = enemy.GetComponent<ShooterActor>();
+                if (actor != null) actor.DealingDamage();
+                else actor.MissingAttack();
+            }
         }
+        
     }
 
     void Heal(int amount)
