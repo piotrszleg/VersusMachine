@@ -1,5 +1,5 @@
 odpalanie:
-mlagents-learn --run-id AgentModel --torch \config\AgentModel.yaml
+mlagents-learn --run-id AgentModel --torch config\AgentModel.yaml
 dodać [--force] jeżeli zaczynamy od nowa, albo [--resume] jeżeli kontynuujemy uczenie. 
 [--initialize-from RUN_ID] pozwala zacząć uczenie na podstawie innego modelu, czyli na finetunning
 

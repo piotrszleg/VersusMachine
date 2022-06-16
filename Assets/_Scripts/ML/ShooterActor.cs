@@ -21,7 +21,17 @@ public class ShooterActor : Agent
     int counter = 0;
     Vector2 direction;
 
-    private void Update()
+
+    public override void Initialize()
+    {
+        controller = GetComponent<Controller>();
+        base.Initialize();
+    }
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        SetParameters(sensor);
+    }
+    public override void OnActionReceived(float[] vectorAction)
     {
         distance = Mathf.Infinity;
         foreach (Transform child in transform.parent.transform)
@@ -35,27 +45,8 @@ public class ShooterActor : Agent
                 }
             }
         // TO DO: Popracowaæ nad parametrami funkcji
-        AddReward(Mathf.Clamp(distanceReward * (-Mathf.Pow(0.01f * distance, 2f) - 10000f / Mathf.Pow(distance, 2f) + 5f), -distanceReward, distanceReward));
-        counter = (counter + 1) % 100000;
-        if (trainer != null && counter >= 10000)
-        {
-            counter = 0;
-            trainer.GetComponent<Trainer>().NewLocation(gameObject);
-            EndEpisode();
-        }
-    }
-
-    public override void Initialize()
-    {
-        controller = GetComponent<Controller>();
-        base.Initialize();
-    }
-    public override void CollectObservations(VectorSensor sensor)
-    {
-        SetParameters(sensor);
-    }
-    public override void OnActionReceived(float[] vectorAction)
-    {
+        //AddReward(Mathf.Clamp(distanceReward * (-Mathf.Pow(0.01f * distance, 2f) - 10000f / Mathf.Pow(distance, 2f) + 5f), -distanceReward, distanceReward) + existenceReward);
+        AddReward(existenceReward);
         controller.jump = vectorAction[0] > 0.5;
         controller.arrows.x = Mathf.Clamp(vectorAction[1], -1, 1);
         controller.shoot = vectorAction[2] > 0.5;
