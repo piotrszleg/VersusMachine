@@ -51,7 +51,7 @@ public class ShooterActor : Agent
         // TO DO: Popracowa? nad parametrami funkcji
         //AddReward(Mathf.Clamp(distanceReward * (-Mathf.Pow(0.01f * distance, 2f) - 10000f / Mathf.Pow(distance, 2f) + 5f), -distanceReward, distanceReward) + existenceReward);
         //AddReward(existenceReward);
-        trainer.GetComponent<Trainer>().CountAction();
+        //trainer.GetComponent<Trainer>().CountAction();
         controller.jump = Convert.ToBoolean(vectorAction.DiscreteActions[0]);
         controller.arrows.x = Mathf.Clamp(vectorAction.ContinuousActions[0], -1, 1);
         controller.shoot = Convert.ToBoolean(vectorAction.DiscreteActions[1]);
@@ -99,12 +99,12 @@ public class ShooterActor : Agent
 
     public void Killing()
     {
-
+        AddReward(killReward);
     }
 
     public void DealingDamage()
     {
-        
+        AddReward(damageReward);
     }
 
     public void MissingAttack()
@@ -114,7 +114,9 @@ public class ShooterActor : Agent
 
     public void Dying()
     {
-        StopAllCoroutines();
+        AddReward(deathReward);
+        EndEpisode();
+        //StopAllCoroutines();
         if (tag == "Player")
             trainer.GetComponent<Trainer>().Died1();
         else
