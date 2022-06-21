@@ -134,7 +134,7 @@ public class Shoot : MonoBehaviour
         {
             if (weapon.sound != null) AudioManager.Play(weapon.sound);
             nextFire = Time.time + 1 / weapon.rateOfFire;
-            other.gameObject.SendMessage("Damage", weapon.damagePerShot, SendMessageOptions.DontRequireReceiver);
+            other.gameObject.SendMessage("Damage", (weapon.damagePerShot, gameObject), SendMessageOptions.DontRequireReceiver);
         }
     }
     void OnDestroy()
