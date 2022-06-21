@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Shoot : MonoBehaviour {
+public class Shoot : MonoBehaviour
+{
 
     Controller contr;
     private float nextFire = 0.0F;
@@ -25,7 +26,8 @@ public class Shoot : MonoBehaviour {
     public GameObject selectedObject;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         contr = GetComponent<Controller>();
         if (GetComponent<HumanController>() != null)
         {
@@ -33,14 +35,15 @@ public class Shoot : MonoBehaviour {
         }
         weaponRenderer.sprite = weapon.sprite;
     }
-	
-	// Update is called once per frame
-	void LateUpdate () {
+
+    // Update is called once per frame
+    void LateUpdate()
+    {
         if (Time.timeScale == 0) return;
 
         shootDirection = contr.aimDirection;
-        
-        
+
+
         if (faceMouse)//Flip player to shooting direction.
         {
             if ((shootDirection.x > 0 && transform.localScale.x < 0) ||
@@ -101,10 +104,11 @@ public class Shoot : MonoBehaviour {
     void ShootBullet()
     {
         Vector2 bulletPosition;
-        bulletPosition = (Vector2)hand.position+shootDirection*1.5f;
-        
+        bulletPosition = (Vector2)hand.position + shootDirection * 1.5f;
+
         //Quaternion bulletRotation = Quaternion.AngleAxis(Vector2.Angle(transform.right, shootDirection), transform.forward);
         Transform newBullet = (Transform)Instantiate(weapon.bullet, bulletPosition, Quaternion.identity);
+        newBullet.GetComponent<Effector>().sender = gameObject;
         newBullet.transform.right = shootDirection;
         if (transform.localScale.x < 0)
         {
@@ -115,21 +119,22 @@ public class Shoot : MonoBehaviour {
         Destroy(newBullet.gameObject, bulletKillTime);
     }
 
-    public void Equip(Weapon newWeapon) {
-            PickableItem dropped = (PickableItem)Instantiate(itemPrefab, transform.position, Quaternion.identity);
-            dropped.weapon = weapon;
-            if(equipMetod==EquipMethod.Touch)dropped.droppedBy = transform;
-            weapon = newWeapon;
-            weaponRenderer.sprite = newWeapon.sprite;
-        
+    public void Equip(Weapon newWeapon)
+    {
+        PickableItem dropped = (PickableItem)Instantiate(itemPrefab, transform.position, Quaternion.identity);
+        dropped.weapon = weapon;
+        if (equipMetod == EquipMethod.Touch) dropped.droppedBy = transform;
+        weapon = newWeapon;
+        weaponRenderer.sprite = newWeapon.sprite;
+
     }
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject!=gameObject && other.gameObject.layer==10 && contr.shoot && Time.time > nextFire && weapon.type == TypeOfWeaopn.Melee)
+        if (other.gameObject != gameObject && other.gameObject.layer == 10 && contr.shoot && Time.time > nextFire && weapon.type == TypeOfWeaopn.Melee)
         {
             if (weapon.sound != null) AudioManager.Play(weapon.sound);
             nextFire = Time.time + 1 / weapon.rateOfFire;
-            other.gameObject.SendMessage("Damage", weapon.damagePerShot, SendMessageOptions.DontRequireReceiver);
+            other.gameObject.SendMessage("Damage", (weapon.damagePerShot, gameObject), SendMessageOptions.DontRequireReceiver);
         }
     }
     void OnDestroy()
