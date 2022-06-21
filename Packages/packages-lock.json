@@ -73,7 +73,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ml-agents": {
-      "version": "file:C:/Users/mateu/Desktop/ml-agents-release_19/com.unity.ml-agents",
+      "version": "file:C:/Users/Konrad/Desktop/ml-agents-release_19/com.unity.ml-agents",
       "depth": 0,
       "source": "local",
       "dependencies": {

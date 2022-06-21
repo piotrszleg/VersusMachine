@@ -88,4 +88,9 @@ public class Killable : MonoBehaviour
             currentHP = hp;
         }
     }
+
+    public bool IsAlive()
+    {
+        return alive;
+    }
 }

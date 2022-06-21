@@ -81,6 +81,7 @@ public class ShooterActor : Agent
 
     public void Killing()
     {
+        
         AddReward(killReward);
     }
 
