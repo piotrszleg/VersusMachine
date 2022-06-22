@@ -22,6 +22,8 @@ public class ShooterActor : Agent
     public string targetTag = "Player";
     int counter = 0;
     Vector2 direction;
+    public bool autoAim = false;
+    System.Random random = new System.Random();
 
 
     public override void Initialize()
@@ -35,23 +37,30 @@ public class ShooterActor : Agent
     }
     public override void OnActionReceived(ActionBuffers vectorAction)
     {
-        //distance = Mathf.Infinity;
-        //foreach (Transform child in transform.parent.transform)
-        //    if (child.gameObject.tag == targetTag && !ReferenceEquals(gameObject, child.gameObject))
-        //    {
-        //        curDistance = (child.transform.localPosition - transform.localPosition).sqrMagnitude;
-        //        if (curDistance < distance)
-        //        {
-        //            distance = curDistance;
-        //            direction = (child.transform.localPosition - transform.localPosition).normalized;
-        //        }
-        //    }
-        // TO DO: Popracowa? nad parametrami funkcji
-        //trainer.GetComponent<Trainer>().CountAction();
+        if (autoAim)
+        {
+            distance = Mathf.Infinity;
+            foreach (Transform child in transform.parent.transform)
+                if (child.gameObject.tag == targetTag && !ReferenceEquals(gameObject, child.gameObject))
+                {
+                    curDistance = (child.transform.localPosition - transform.localPosition).sqrMagnitude;
+                    if (curDistance < distance)
+                    {
+                        distance = curDistance;
+                        direction = (child.transform.localPosition - transform.localPosition).normalized;
+                    }
+                }
+            Vector2 noise = new Vector3(
+              Mathf.Sin(2 * Mathf.PI * UnityEngine.Random.Range(-45, 45) / 360),
+              Mathf.Sin(2 * Mathf.PI * UnityEngine.Random.Range(-45, 45) / 360));
+            controller.aimDirection = direction + noise;
+        }
+        else
+            controller.aimDirection = new Vector2(Mathf.Cos(vectorAction.ContinuousActions[1] * 360 * Mathf.Deg2Rad), Mathf.Sin(vectorAction.ContinuousActions[1] * 360 * Mathf.Deg2Rad));
+
         controller.jump = Convert.ToBoolean(vectorAction.DiscreteActions[0]);
         controller.arrows.x = Mathf.Clamp(vectorAction.ContinuousActions[0], -1, 1);
         controller.shoot = Convert.ToBoolean(vectorAction.DiscreteActions[1]);
-        controller.aimDirection = new Vector2(Mathf.Cos(vectorAction.ContinuousActions[1] * 360 * Mathf.Deg2Rad), Mathf.Sin(vectorAction.ContinuousActions[1] * 360 * Mathf.Deg2Rad));
     }
     public override void Heuristic(in ActionBuffers actionsOut)
     {
@@ -63,9 +72,7 @@ public class ShooterActor : Agent
         Vector3 aimDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         float angle = Vector2.Angle(new Vector2(aimDirection.x, aimDirection.y), Vector2.right);
         if (aimDirection.y < 0f)
-        {
             angle = 360 - angle;
-        }
         continuousActionsOut[1] = angle / 360;
     }
 

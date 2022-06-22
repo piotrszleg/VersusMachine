@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Killable : MonoBehaviour
 {
@@ -31,6 +32,12 @@ public class Killable : MonoBehaviour
             ShooterActor actor = gameObject.GetComponent<ShooterActor>();
             if (actor != null)
                 actor.Falling();
+            if(tag == "Player")
+            {
+                Scene scene = SceneManager.GetActiveScene();
+                SceneManager.LoadScene(scene.name);
+            }
+            alive = false;
             Destroy(gameObject);
             //Damage((100, null));
         }
@@ -70,6 +77,11 @@ public class Killable : MonoBehaviour
                     }
                     ShooterActor victim = gameObject.GetComponent<ShooterActor>();
                     if (victim != null) victim.Dying();
+                    if (tag == "Player")
+                    {
+                        Scene scene = SceneManager.GetActiveScene();
+                        SceneManager.LoadScene(scene.name);
+                    }
                     Destroy(gameObject);
                 }
             }
