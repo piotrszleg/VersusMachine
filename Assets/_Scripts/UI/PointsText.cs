@@ -22,7 +22,7 @@ public class PointsText : MonoBehaviour {
         {
             if (a.IsAlive())
             {
-                    i++;
+                i++;
             }
         }
         return i;
@@ -34,7 +34,10 @@ public class PointsText : MonoBehaviour {
         uiText.text = "Left: " + alive.ToString();
         if (alive <= 0)
         {
-            SceneManager.LoadScene("MainMenu");
+            String scene = SceneManager.GetActiveScene().name;
+            if(scene == "Sunrise") SceneManager.LoadScene("NightFall");
+            else if(scene == "Night") SceneManager.LoadScene("FactoryIntro");
+            else if (scene == "Factory") SceneManager.LoadScene("FactoryOutro");
         }
     }
 }
