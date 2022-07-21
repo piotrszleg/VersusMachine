@@ -5,25 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
-    public Button playButton;
-    public Button exitButton;
-
-    void Start()
+    public void LoadScene(string sceneName)
     {
-        if (playButton != null)
-        {
-            playButton.onClick.AddListener(() =>
-            {
-                SceneManager.LoadScene("Game");
-            });
-        }
-        if (exitButton != null)
-        {
-            exitButton.onClick.AddListener(() =>
-            {
-                Application.Quit();
-            });
-        }
+        SceneManager.LoadScene(sceneName);
     }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Quit();
+        }    
+    }
 }

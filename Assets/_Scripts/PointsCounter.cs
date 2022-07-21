@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PointsCounter : MonoBehaviour {
 
-    public int points;
+    public int points=3;
 
 	// Use this for initialization
 	void Start () {
@@ -13,7 +13,7 @@ public class PointsCounter : MonoBehaviour {
 
     public void Add(int amount)
     {
-        points += amount;
+        points--;
     }
 	
 	// Update is called once per frame

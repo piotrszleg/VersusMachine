@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
-public class Killable : MonoBehaviour {
+public class Killable : MonoBehaviour
+{
 
     public int hp = 100;
     private int currentHP;
-    public int CurrentHP {
+    private bool alive = true;
+    public int CurrentHP
+    {
         get
         {
             return currentHP;
@@ -23,29 +27,66 @@ public class Killable : MonoBehaviour {
 
     void Update()
     {
-        if (transform.position.y < 0)
+        if (transform.position.y < -10)
         {
-            Damage(100);
+            ShooterActor actor = gameObject.GetComponent<ShooterActor>();
+            if (actor != null)
+                actor.Falling();
+            if(tag == "Player")
+            {
+                Scene scene = SceneManager.GetActiveScene();
+                SceneManager.LoadScene(scene.name);
+            }
+            alive = false;
+            Destroy(gameObject);
+            //Damage((100, null));
         }
     }
 
-    void Damage(int amount)
+    void Damage((int, GameObject) info)
     {
-        currentHP -= amount;
-        if (currentHP <= 0)
+        int amount = info.Item1;
+        GameObject enemy = info.Item2;
+
+        if (enemy != null)
         {
-            if (hurt != null) AudioManager.Play(hurt);
-            if (corpsePrefab != null)
+            ShooterActor actor = enemy.GetComponent<ShooterActor>();
+            if (actor != null) actor.DealingDamage();
+            else actor.MissingAttack();
+
+            if (!ReferenceEquals(gameObject, enemy) && enemy.tag != tag)
             {
-                Transform corpse = (Instantiate(corpsePrefab, transform.position, Quaternion.identity) as Transform);
-                if (transform.localScale.x < 0)
+                currentHP -= amount;
+                if (currentHP <= 0 && alive)
                 {
-                    corpse.localScale = new Vector2(-corpse.localScale.x, corpse.localScale.y);
+                    alive = false;
+                    if (hurt != null) AudioManager.Play(hurt);
+                    if (corpsePrefab != null)
+                    {
+                        Transform corpse = Instantiate(corpsePrefab, transform.position, Quaternion.identity) as Transform;
+                        if (transform.localScale.x < 0)
+                        {
+                            corpse.localScale = new Vector2(-corpse.localScale.x, corpse.localScale.y);
+                        }
+                    }
+                    onDeath.Invoke();
+                    if (enemy != null)
+                    {
+                        actor = enemy.GetComponent<ShooterActor>();
+                        if (actor != null) actor.Killing();
+                    }
+                    ShooterActor victim = gameObject.GetComponent<ShooterActor>();
+                    if (victim != null) victim.Dying();
+                    if (tag == "Player")
+                    {
+                        Scene scene = SceneManager.GetActiveScene();
+                        SceneManager.LoadScene(scene.name);
+                    }
+                    Destroy(gameObject);
                 }
             }
-            onDeath.Invoke();
-            Destroy(gameObject);
         }
+
     }
 
     void Heal(int amount)
@@ -58,5 +99,10 @@ public class Killable : MonoBehaviour {
         {
             currentHP = hp;
         }
+    }
+
+    public bool IsAlive()
+    {
+        return alive;
     }
 }

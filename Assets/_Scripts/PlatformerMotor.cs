@@ -39,7 +39,7 @@ public class PlatformerMotor : MonoBehaviour {
 
     void Start () {
         body = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         contr = GetComponent<Controller>();
         Shoot checkShooter = GetComponent<Shoot>();
         if (checkShooter.faceMouse)
